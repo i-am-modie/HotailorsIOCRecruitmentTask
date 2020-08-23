@@ -2,7 +2,8 @@ import { inject, injectable } from "inversify";
 
 import { IRequestService } from "./IRequestService";
 import { COMMON_TYPES } from "../../../ioc/commonTypes";
-import { ILogger } from "../../../commonServices/iLogger";
+import { IPokemonService } from "../PokemonService/IPokemonService";
+import { ILogger } from "../../../commonServices/Logger/iLogger";
 
 @injectable()
 export class RequestService implements IRequestService {

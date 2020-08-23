@@ -4,5 +4,7 @@ export const COMMON_TYPES: any = {
     IRequestService: Symbol.for("IRequestService"),
     IErrorResponseFactory: Symbol.for("IErrorResponseFactory"),
     IPokemonsResponseFactory: Symbol.for("IPokemonsResponseFactory"),
-    pokemonApiURL: Symbol.for("pokemonApiURL")
+    pokemonApiURL: Symbol.for("pokemonApiURL"),
+    pokemonApi: Symbol.for("callPokemonApi"),
+    axios: Symbol.for("axios")
 };
