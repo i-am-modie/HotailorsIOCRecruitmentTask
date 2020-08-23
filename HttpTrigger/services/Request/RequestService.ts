@@ -10,10 +10,11 @@ export class RequestService implements IRequestService {
     @inject(COMMON_TYPES.IPokemonService)
     private readonly _pokemonService: IPokemonService;
 
-    public async processRequestAsync(req: any): Promise<any> {
+    public async processRequestAsync(req: any): Promise<string[]> {
         const url: URL = new URL(req.url);
 
         const [type, ...restOfTypes] = url.searchParams.getAll("type");
+
         // if id can be 0 change this filter
         const idsArray: number[] = url.searchParams
             .getAll("id")

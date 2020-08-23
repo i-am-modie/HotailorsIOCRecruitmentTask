@@ -1,4 +1,4 @@
-import { Pokemon } from "./IPokemon";
+import { Pokemon } from "./Pokemon";
 
 export interface IPokemonsResponse {
     pokemons: Pokemon[];
