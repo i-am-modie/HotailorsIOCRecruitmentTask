@@ -11,6 +11,6 @@ export class ErrorResponseFactory implements IResponseFactory<IErrorResponse> {
             body,
             status: 400,
             headers: { "Content-Type": "application/json" },
-        } 
+        }; 
     }
 }

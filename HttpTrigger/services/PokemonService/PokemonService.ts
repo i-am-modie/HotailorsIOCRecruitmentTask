@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { inject, injectable } from "inversify";
 
 import { IPokemonService } from "./IPokemonService";
-import { PokemonQueryParams, Pokemon } from "./types";
+import { IPokemon, IPokemonQueryParams } from "./types";
 import { COMMON_TYPES } from "../../../ioc/commonTypes";
 
 @injectable()
@@ -10,16 +10,16 @@ export class PokemonService implements IPokemonService {
     @inject(COMMON_TYPES.pokemonApi)
     private readonly _pokemonApi: AxiosInstance;
 
-    async get(config: PokemonQueryParams) {
+    public async get(config: IPokemonQueryParams): Promise<IPokemon[]> {
         const { ids, type } = config;
 
         if (!ids.length) {
             return [];
         }
 
-        const pokemons = await this.getByIds(config.ids);
+        const pokemons: IPokemon[] = await this.getByIds(config.ids);
 
-        //comment if type is optional
+        // assumed type is not required
         if (!type) {
             return pokemons;
         }
@@ -27,17 +27,17 @@ export class PokemonService implements IPokemonService {
         return this.filterPokemonsByType(pokemons, type);
     }
 
-    async getByIds(ids: number[]) {
+    public async getByIds(ids: number[]): Promise<IPokemon[]> {
         return Promise.all(ids.map((id) => this.getById(id)));
     }
 
-    async getById(id: number) {
-        return (await this._pokemonApi.get<Pokemon>(`pokemon/${id}`)).data;
+    public async getById(id: number): Promise<IPokemon> {
+        return (await this._pokemonApi.get<IPokemon>(`pokemon/${id}`)).data;
     }
 
-    filterPokemonsByType(pokemons: Pokemon[], type) {
-        return pokemons.filter((it) =>
-            it.types.some((it) => it.type.name === type)
+    private filterPokemonsByType(pokemons: IPokemon[], type: string): IPokemon[] {
+        return pokemons.filter((pokemon) =>
+            pokemon.types.some((typeObject) => typeObject.type.name === type),
         );
     }
 }

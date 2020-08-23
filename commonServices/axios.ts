@@ -1,3 +1,3 @@
-import axiosFromLib from "axios"
+import axiosFromLib, { AxiosStatic } from "axios";
 
-export const axios = axiosFromLib
+export const axios: AxiosStatic = axiosFromLib;

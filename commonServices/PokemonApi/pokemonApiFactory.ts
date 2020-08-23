@@ -1,5 +1,8 @@
-import { AxiosStatic } from "axios";
+import { AxiosInstance, AxiosStatic } from "axios";
 
-export const pokemonApiFactory = (axios: AxiosStatic, apiUrl: string) => {
+export function pokemonApiFactory(
+    axios: AxiosStatic,
+    apiUrl: string,
+): AxiosInstance {
     return axios.create({ baseURL: apiUrl });
-};
+}

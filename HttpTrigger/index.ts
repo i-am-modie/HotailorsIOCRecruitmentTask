@@ -12,17 +12,17 @@ import { RequestService } from "./services/Request/RequestService";
 
 const httpTrigger: AzureFunction = async (
     ctx: Context,
-    req: HttpRequest
+    req: HttpRequest,
 ): Promise<any> => {
     const container: Container = getContainer();
 
     const logger: Logger = container.get<ILogger>(
-        COMMON_TYPES.ILogger
+        COMMON_TYPES.ILogger,
     ) as Logger;
     logger.init(ctx, "1");
 
     const requestService: RequestService = container.get<IRequestService>(
-        COMMON_TYPES.IRequestService
+        COMMON_TYPES.IRequestService,
     ) as RequestService;
 
     const errorResponseFactory: IResponseFactory<IErrorResponse> = container.get<
@@ -34,7 +34,7 @@ const httpTrigger: AzureFunction = async (
 
     try {
         const pokemonNames: string[] = await requestService.processRequestAsync(
-            req
+            req,
         );
         ctx.res = pokemonsResponseFactory.create({ pokemons: pokemonNames });
     } catch (err) {

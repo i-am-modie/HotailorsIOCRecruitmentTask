@@ -7,5 +7,5 @@ export const COMMON_TYPES: any = {
     IPokemonsResponseFactory: Symbol.for("IPokemonsResponseFactory"),
     pokemonApiURL: Symbol.for("pokemonApiURL"),
     pokemonApi: Symbol.for("callPokemonApi"),
-    axios: Symbol.for("axios")
+    axios: Symbol.for("axios"),
 };

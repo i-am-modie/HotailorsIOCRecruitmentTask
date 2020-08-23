@@ -1,17 +1,17 @@
-export interface PokemonQueryParams {
-    ids: number[],
-    type?: string
+export interface IPokemonQueryParams {
+    ids: number[];
+    type?: string;
 }
 
-export interface type {
-    type:{
-        name: string
-    }
-     // here you can type more fields when needed
+export interface IType {
+    type: {
+        name: string,
+    };
+    // here you can type more fields when needed
 }
 
-export interface Pokemon {
-    name: string,
-    types: type[]
+export interface IPokemon {
+    name: string;
+    types: IType[];
     // here you can type more fields when needed
 }

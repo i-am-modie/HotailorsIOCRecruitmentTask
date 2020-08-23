@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Container } from "inversify";
-import { AxiosStatic, AxiosInstance } from "axios";
+import { AxiosInstance, AxiosStatic } from "axios";
 
 import { COMMON_TYPES } from "./commonTypes";
 import { IFunctionService } from "../HttpTrigger/services/IFunctionService";
@@ -39,16 +39,18 @@ const getContainer: () => Container = (): Container => {
 
     container
         .bind<IResponseFactory<IErrorResponse>>(
-            COMMON_TYPES.IErrorResponseFactory
+            COMMON_TYPES.IErrorResponseFactory,
         )
         .to(ErrorResponseFactory);
 
     container
         .bind<IResponseFactory<IPokemonsResponse>>(
-            COMMON_TYPES.IPokemonsResponseFactory
+            COMMON_TYPES.IPokemonsResponseFactory,
         )
         .to(PokemonsResponseFactory);
 
+    // probably better solution but overkill for now: 
+    // https://github.com/inversify/InversifyJS/blob/master/wiki/recipes.md#injecting-dependencies-into-a-function
     container
         .bind<AxiosInstance>(COMMON_TYPES.pokemonApi)
         .toConstantValue(pokemonApiFactory(axios, POKE_API_URL));

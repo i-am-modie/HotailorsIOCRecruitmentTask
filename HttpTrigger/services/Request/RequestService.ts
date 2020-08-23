@@ -3,27 +3,29 @@ import { inject, injectable } from "inversify";
 import { IRequestService } from "./IRequestService";
 import { COMMON_TYPES } from "../../../ioc/commonTypes";
 import { IPokemonService } from "../PokemonService/IPokemonService";
-import { ILogger } from "../../../commonServices/Logger/iLogger";
+import { IPokemon } from "../PokemonService/types";
 
 @injectable()
 export class RequestService implements IRequestService {
-    @inject(COMMON_TYPES.ILogger)
-    private readonly _logger: ILogger;
-
     @inject(COMMON_TYPES.IPokemonService)
-    private readonly _pokemonService: IPokemonService
+    private readonly _pokemonService: IPokemonService;
 
     public async processRequestAsync(req: any): Promise<any> {
         const url: URL = new URL(req.url);
 
-        const [type, ...restOfTypes] = url.searchParams.getAll("type")
-        const idsArray = url.searchParams.getAll("id").map(Number).filter(Boolean);
+        const [type, ...restOfTypes] = url.searchParams.getAll("type");
+        // if id can be 0 change this filter
+        const idsArray: number[] = url.searchParams
+            .getAll("id")
+            .map(Number)
+            .filter(Boolean);
 
-        if (!type) {
-            throw new Error("No Type Provided");
-        }
-        
-        if(restOfTypes.length !== 0){
+        // assumed that type argument is not required
+        // if (!type) {
+        //     throw new Error("No Type Provided");
+        // }
+
+        if (restOfTypes.length !== 0) {
             throw new Error("More than one type provided");
         }
 
@@ -33,8 +35,11 @@ export class RequestService implements IRequestService {
 
         const uniqueIdsArray: number[] = [...new Set(idsArray)];
 
-        const pokemons = await this._pokemonService.get({ids: uniqueIdsArray, type});
+        const pokemons: IPokemon[] = await this._pokemonService.get({
+            ids: uniqueIdsArray,
+            type,
+        });
 
-        return pokemons.map(it=>it.name)
+        return pokemons.map((it) => it.name);
     }
 }
