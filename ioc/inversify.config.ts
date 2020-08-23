@@ -15,6 +15,8 @@ import { ErrorResponseFactory } from "../HttpTrigger/responses/Error/ErrorRespon
 import { POKE_API_URL } from "../commonServices/PokemonApi/constants";
 import { axios } from "../commonServices/axios";
 import { pokemonApiFactory } from "../commonServices/PokemonApi/pokemonApiFactory";
+import { IPokemonService } from "../HttpTrigger/services/PokemonService/IPokemonService";
+import { PokemonService } from "../HttpTrigger/services/PokemonService/PokemonService";
 import { ILogger } from "../commonServices/Logger/iLogger";
 import { Logger } from "../commonServices/Logger/logger";
 
@@ -32,6 +34,9 @@ const getContainer: () => Container = (): Container => {
         .to(RequestService);
 
     container
+        .bind<IPokemonService>(COMMON_TYPES.IPokemonService)
+        .to(PokemonService);
+
     container
         .bind<IResponseFactory<IErrorResponse>>(
             COMMON_TYPES.IErrorResponseFactory

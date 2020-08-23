@@ -10,12 +10,14 @@ export class RequestService implements IRequestService {
     @inject(COMMON_TYPES.ILogger)
     private readonly _logger: ILogger;
 
+    @inject(COMMON_TYPES.IPokemonService)
+    private readonly _pokemonService: IPokemonService
+
     public async processRequestAsync(req: any): Promise<any> {
         const url: URL = new URL(req.url);
 
         const [type, ...restOfTypes] = url.searchParams.getAll("type")
         const idsArray = url.searchParams.getAll("id").map(Number).filter(Boolean);
-
 
         if (!type) {
             throw new Error("No Type Provided");
@@ -31,6 +33,8 @@ export class RequestService implements IRequestService {
 
         const uniqueIdsArray: number[] = [...new Set(idsArray)];
 
-        return { uniqueIds: uniqueIdsArray.map((it) => it.toString()) };
+        const pokemons = await this._pokemonService.get({ids: uniqueIdsArray, type});
+
+        return pokemons.map(it=>it.name)
     }
 }
