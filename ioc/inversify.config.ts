@@ -13,6 +13,7 @@ import { IRequestService } from "../HttpTrigger/services/Request/IRequestService
 import { RequestService } from "../HttpTrigger/services/Request/RequestService";
 import { IErrorResponse } from "../HttpTrigger/responses/Error/IErrorResponse";
 import { ErrorResponseFactory } from "../HttpTrigger/responses/Error/ErrorResponseFactory";
+import { POKE_API_URL } from "../HttpTrigger/services/PokemonApi/constants";
 
 const getContainer: (() => Container) = (): Container => {
     const container: Container = new Container();
@@ -32,6 +33,9 @@ const getContainer: (() => Container) = (): Container => {
 
     container.bind<IResponseFactory<IPokemonsResponse>>(COMMON_TYPES.IPokemonsResponseFactory)
     .to(PokemonsResponseFactory);
+
+    container.bind<string>(COMMON_TYPES.pokemonApiURL)
+    .toConstantValue(POKE_API_URL)
 
     return container;
 };
