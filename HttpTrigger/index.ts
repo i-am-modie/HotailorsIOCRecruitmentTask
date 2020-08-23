@@ -1,8 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import getContainer from "../ioc/inversify.config";
 import { COMMON_TYPES } from "../ioc/commonTypes";
-import { Logger } from "../commonServices/logger";
-import { ILogger } from "../commonServices/iLogger";
+import { Logger } from "../commonServices/Logger/logger";
+import { ILogger } from "../commonServices/Logger/iLogger";
 import { Container } from "inversify";
 import { IResponseFactory } from "./responses/IResponseFactory";
 import { IPokemonsResponse } from "./responses/Pokemon/IPokemonsResponse";
@@ -12,6 +12,9 @@ import { IErrorResponse } from "./responses/Error/IErrorResponse";
 const httpTrigger: AzureFunction = async (ctx: Context, req: HttpRequest): Promise<any> => {
     const container: Container = getContainer();
     const logger: Logger = container.get<ILogger>(COMMON_TYPES.ILogger) as Logger;
+    const logger: Logger = container.get<ILogger>(
+        COMMON_TYPES.ILogger
+    ) as Logger;
     logger.init(ctx, "1");
 
     const requestService: IRequestService =

@@ -14,6 +14,8 @@ import { RequestService } from "../HttpTrigger/services/Request/RequestService";
 import { IErrorResponse } from "../HttpTrigger/responses/Error/IErrorResponse";
 import { ErrorResponseFactory } from "../HttpTrigger/responses/Error/ErrorResponseFactory";
 import { POKE_API_URL } from "../HttpTrigger/services/PokemonApi/constants";
+import { ILogger } from "../commonServices/Logger/iLogger";
+import { Logger } from "../commonServices/Logger/logger";
 
 const getContainer: (() => Container) = (): Container => {
     const container: Container = new Container();
